@@ -27,8 +27,17 @@ class GanjiSpider(CrawlSpider):
     	houseItems=[]
     	for house in houses:
             hItem=HouseItem()
-            hItem['title']=house.select('div[@class="list-mod4"]/div[@class="info-title"]/a/text()').extract()[0]
-            hItem['name']=house.select('div[@class="list-mod4"]/div[@class="list-mod2"]/div[@class="list-word"]/span[@class="list-word-col"]/a/text()').extract()[0]
-            hItem['price']=house.select('div[@class="list-mod4"]/div[@class="list-mod3 clearfix"]/p[@class="list-part"]/em[@class="sale-price"]/text()').extract()[0]
+            hItem['title']=house.select('div[@class="list-mod4"]/div[@class="info-title"]/a/text()').extract()[0].strip()
+            hItem['community']=house.select('div[@class="list-mod4"]/div[@class="list-mod2"]/div[@class="list-word"]/span[@class="list-word-col"]/a/text()').extract()[0].strip()
+            hItem['price']=house.select('div[@class="list-mod4"]/div[@class="list-mod3 clearfix"]/p[@class="list-part"]/em[@class="sale-price"]/text()').extract()[0].strip()
+            hItem['area']=house.select('div[@class="list-mod4"]/div[@class="list-mod3 clearfix"]/p[@class="list-part"][2]/text()').extract()[0].strip()
+            houseType=house.select('div[@class="list-mod4"]/div[@class="list-mod2"]/p[@class="list-word"]/span[@class="js-huxing"]/text()').extract()
+            if len(houseType)==0:
+                hItem['houseType']=''
+            else:
+                hItem['houseType']=houseType[0]
+            infos=house.select('div[@class="list-mod4"]/div[@class="list-mod2"]/p[@class="list-word"]/text()').extract()
+            hItem['layer']=infos[1]
+            hItem['direction']=infos[2]
             houseItems.append(hItem)
         return houseItems

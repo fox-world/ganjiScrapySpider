@@ -9,6 +9,10 @@ from scrapy.item import Item, Field
 
 class HouseItem(Item):
     # define the fields for your item here like:
-    title = Field()
-    name = Field()
-    price = Field()
+    title = Field() #标题
+    community = Field() #名称
+    price = Field() #价格
+    area = Field()  #面积
+    houseType = Field() #户型
+    layer = Field() #楼层
+    direction = Field() #朝向
